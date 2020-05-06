@@ -1,5 +1,5 @@
 /* eslint react/require-default-props: 0 */
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import HeaderCell from './header-cell';
@@ -63,6 +63,12 @@ const Header = (props) => {
     })
   ];
 
+  const spacerChildren = [
+    columns.map(column => (
+      <th key={ column.dataField }>{ column.text }</th>
+    ))
+  ];
+
   if (!selectRow.hideSelectColumn) {
     if (isRenderFunctionColumnInLeft(selectRow.selectColumnPosition)) {
       childrens.unshift(<SelectionHeaderCellComp key="selection" />);
@@ -80,11 +86,18 @@ const Header = (props) => {
   }
 
   return (
-    <thead>
-      <tr className={ className }>
-        { childrens }
-      </tr>
-    </thead>
+    <Fragment>
+      <thead className="control-thead">
+        <tr className={ className }>
+          { childrens }
+        </tr>
+      </thead>
+      <thead className="spacer-thead">
+        <tr>
+          { spacerChildren }
+        </tr>
+      </thead>
+    </Fragment>
   );
 };
 
